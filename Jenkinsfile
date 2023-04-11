@@ -36,12 +36,5 @@ pipeline {
                 bat "kubectl rollout status deployment/vue-app --kubeconfig=C:\\Users\\danie\\.kube\\config"
             }
         }
-        
-        stage('Clean up') {
-            steps {
-                bat 'docker stop frontend-chess || true'
-                bat 'docker rm frontend-chess || true'
-            }
-        }
     }
 }
