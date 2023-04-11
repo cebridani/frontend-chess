@@ -1,0 +1,67 @@
+{
+  "name": "chess-package.json",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@meforma/vue-toaster": "^1.3.0",
+    "ant-design-vue": "^3.3.0-beta.4",
+    "axios": "^1.3.4",
+    "chessboardjs": "^0.0.1",
+    "core-js": "^3.8.3",
+    "firebase": "^9.17.2",
+    "jquery": "^3.6.4",
+    "vee-validate": "^4.5.8",
+    "vue": "^3.2.13",
+    "vue-router": "^4.1.6",
+    "vue3-carousel": "^0.2.14",
+    "vue3-chessboard": "^1.1.5",
+    "vuex": "^4.0.2",
+    "yup": "^1.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cebridani/frontend-vue-ches.git"
+  },
+  "author": "cebridani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cebridani/frontend-vue-ches/issues"
+  },
+  "homepage": "https://github.com/cebridani/frontend-vue-ches#readme"
+}
