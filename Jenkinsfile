@@ -15,9 +15,7 @@ pipeline {
         
         stage('Docker Build') {
             steps {
-                dir('frontend-chess') {
-                    bat "docker build -t $dockerImage ."
-                }
+                  bat "docker build -t $dockerImage ."
             }
         }
         
