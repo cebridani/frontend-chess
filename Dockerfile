@@ -2,7 +2,7 @@
 FROM node:lts-alpine as build-stage
 
 # Directorio de trabajo
-WORKDIR ./
+WORKDIR /app
 
 # Copiar package.json y package-lock.json
 COPY package*.json ./
