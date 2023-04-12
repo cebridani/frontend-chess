@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vue-app
+  name: frontend-chess
+  namespace: chess
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: vue-app
+      app: frontend-chess
   template:
     metadata:
-      name: vue-app
+      name: frontend-chess
       namespace: chess
       labels:
-        app: vue-app
+        app: frontend-chess
     spec:
       containers:
-        - name: vue-app
+        - name: frontend-chess
           image: cebridani/frontend-chess:latest
           ports:
-            - containerPort: 4000
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: vue-app-service
+  name: frontend-chess
   namespace: chess
 spec:
-  type: NodePort
   selector:
-    app: vue-app
+    app: frontend-chess
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30044
+  type: ClusterIP
