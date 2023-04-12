@@ -32,8 +32,8 @@ pipeline {
             steps {
                 bat "kubectl config use-context minikube --kubeconfig=C:\\Users\\danie\\.kube\\config"
                 bat "kubectl config set-context minikube --namespace=chess --kubeconfig=C:\\Users\\danie\\.kube\\config"
-                bat "kubectl rollout restart deployment/vue-app --kubeconfig=C:\\Users\\danie\\.kube\\config"
-                bat "kubectl rollout status deployment/vue-app --kubeconfig=C:\\Users\\danie\\.kube\\config"
+                bat "kubectl rollout restart deployment/frontend-chess --kubeconfig=C:\\Users\\danie\\.kube\\config"
+                bat "kubectl rollout status deployment/frontend-chess --kubeconfig=C:\\Users\\danie\\.kube\\config"
             }
         }
     }
