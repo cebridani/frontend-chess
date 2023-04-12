@@ -138,7 +138,7 @@ export default {
     };
 
     try {
-      const response = await axios.post("http://backend-chess.com/api/auth/login/api/auth/login", requestData);
+      const response = await axios.post("http://backend-chess.com/api/auth/login", requestData);
 
       // Si la respuesta es exitosa, redirige al usuario a la página de inicio de sesión
       if (response.status === 201) {
@@ -173,7 +173,7 @@ export default {
       };
 
       try {
-        const response = await axios.post("http://backend-chess.com/api/auth/login/api/auth/login", requestData);
+        const response = await axios.post("http://backend-chess.com/api/auth/login", requestData);
 
         if (response.status === 200) {
           localStorage.setItem("access_token", response.data.accessToken);
