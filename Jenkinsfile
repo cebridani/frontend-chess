@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'NodeJS 19'
+    }
     environment {
         dockerImage = "cebridani/frontend-chess:latest"
     }
