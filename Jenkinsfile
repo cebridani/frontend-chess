@@ -1,27 +1,15 @@
 pipeline {
     agent any
-    tools {
-        nodejs 'NodeJS_19'
-    }
+
     environment {
         dockerImage = "cebridani/frontend-chess:latest"
-        PATH = "/var/jenkins_home/bin:$PATH"
     }
+
     stages {
         stage('Build') {
             steps {
-                dir('frontend-chess') {
-                    script {
-                        sh 'export PATH="$PATH:/var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/NodeJS_19/bin"'
-                        env.NODEJS_HOME = "${tool 'NodeJS_19'}"
-                        env.PATH="${env.NODEJS_HOME}:${env.PATH}"
-                        echo "${env.PATH}"
-                        sh 'node -version'
-                        sh "npm version"
-                        sh "npm install"
-                        sh "npm run build"
-                    }
-                }
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
         
