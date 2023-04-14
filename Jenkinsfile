@@ -10,17 +10,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                    dir('frontend-chess') {
-                        env.NODEJS_HOME = "${tool NodeJS_19}"
+                dir('frontend-chess') {
+                    script {
+                        env.NODEJS_HOME = "${tool 'NodeJS_19'}"
                         env.PATH="${env.NODEJS_HOME}:${env.PATH}"
                         echo "${env.PATH}"
                         sh 'node -version'
                         sh "npm version"
                         sh "npm install"
                         sh "npm run build"
-
                     }
                 }
+            }
         }
         
         stage('Docker Build') {
