@@ -13,11 +13,12 @@ pipeline {
                     dir('frontend-chess') {
                         env.NODEJS_HOME = "${tool NodeJS_19}"
                         env.PATH="${env.NODEJS_HOME}:${env.PATH}"
-                        echo ${env.PATH}
+                        echo "${env.PATH}"
                         sh 'node -version'
                         sh "npm version"
                         sh "npm install"
                         sh "npm run build"
+
                     }
                 }
         }
