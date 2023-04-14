@@ -8,10 +8,9 @@ pipeline {
         PATH = "/var/jenkins_home/bin:$PATH"
     }
     stages {
-        stage('Setup Node.js symlink') {
+        stage('Setup Node.js') {
             steps {
-                sh 'mkdir -p /var/jenkins_home/bin'
-                sh 'ln -sf /var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/NodeJS_19/bin/node /var/jenkins_home/bin/node'
+                sh 'ln -sf "$(which node)" /usr/bin/node'
             }
         }
         stage('Build') {
