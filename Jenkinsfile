@@ -8,16 +8,13 @@ pipeline {
         PATH = "/var/jenkins_home/bin:$PATH"
     }
     stages {
-        stage('Setup Node.js') {
-            steps {
-                sh 'ln -sf "$(which node)" /usr/bin/node'
-            }
-        }
         stage('Build') {
             steps {
-                dir('frontend-chess') {
-                    sh 'npm install'
-                    sh 'npm run build'
+                withEnv(["PATH+NODEJS=/var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/NodeJS_19/bin"]) {
+                    dir('frontend-chess') {
+                        sh 'npm install'
+                        sh 'npm run build'
+                    }
                 }
             }
         }
