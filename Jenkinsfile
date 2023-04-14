@@ -1,33 +1,23 @@
 pipeline {
     agent any
-    tools {
-        nodejs 'NodeJS_19'
-    }
+
     environment {
         dockerImage = "cebridani/frontend-chess:latest"
     }
-    stages {
-        stage('Setup Node.js') {
-            steps {
-                script {
-                    env.NODEJS_HOME = tool(name: 'NodeJS_19', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation')
-                    env.PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
-                }
-            }
-        }
 
+    stages {
         stage('Build') {
             steps {
-                dir('frontend-chess') {
-                    sh 'npm install'
-                    sh 'npm run build'
-                }
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
         
         stage('Docker Build') {
             steps {
-                sh "docker build -t $dockerImage ."
+                script {
+                    sh "docker build -t ${dockerImage} ."
+                }
             }
         }
         
@@ -35,8 +25,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh "docker login -u $DOCKER_USER -p $DOCKER_PASS"
+                    sh "docker push ${dockerImage}"
                 }
-                sh "docker push $dockerImage"
             }
         }
         
