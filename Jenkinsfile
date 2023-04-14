@@ -10,6 +10,14 @@ pipeline {
     }
 
     stages {
+        
+        stage('Setup Node.js symlink') {
+            steps {
+                sh 'sudo ln -sf "$(which node)" /usr/bin/node'
+            }
+        }
+
+        
         stage('Build') {
             steps {
                 sh 'npm install'
