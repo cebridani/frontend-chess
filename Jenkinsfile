@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'NodeJS_19'
+    }
     environment {
         dockerImage = "cebridani/frontend-chess:latest"
         PATH = "/var/jenkins_home/bin:$PATH"
