@@ -1,27 +1,22 @@
 pipeline {
     agent any
-    
-    tools {
-        nodejs 'NodeJS_19'
-    }
-
     environment {
         dockerImage = "cebridani/frontend-chess:latest"
+        PATH = "/var/jenkins_home/bin:$PATH"
     }
-
     stages {
-        
         stage('Setup Node.js symlink') {
             steps {
-                sh 'sudo ln -sf "$(which node)" /usr/bin/node'
+                sh 'mkdir -p /var/jenkins_home/bin'
+                sh 'ln -sf /var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/NodeJS_19/bin/node /var/jenkins_home/bin/node'
             }
         }
-
-        
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'npm run build'
+                dir('frontend-chess') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
             }
         }
         
