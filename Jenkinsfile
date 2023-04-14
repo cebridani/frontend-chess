@@ -10,11 +10,12 @@ pipeline {
         stage('Setup Node.js') {
             steps {
                 script {
-                    NODEJS_HOME = tool(name: 'NodeJS 19', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation')
+                    env.NODEJS_HOME = tool(name: 'NodeJS_19', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation')
                     env.PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
                 }
             }
         }
+
         stage('Build') {
             steps {
                 dir('frontend-chess') {
