@@ -138,7 +138,7 @@ export default {
     };
 
     try {
-      const response = await axios.post(""http://192.168.49.2:30353/api/auth/login", requestData);
+      const response = await axios.post("http://192.168.49.2:30353/api/auth/login", requestData);
 
       // Si la respuesta es exitosa, redirige al usuario a la página de inicio de sesión
       if (response.status === 201) {
