@@ -59,7 +59,8 @@ async function handleMove(move) {
       moves.value.push({ white: '', black: move.san });
     }
   }
-
+  
+  saveFen(boardAPI.value?.getFen());
   //get_list_best_moves(boardAPI.value?.getFen())
   boardAPI.value?.setShapes(shapes);
   updateOpeningName();
@@ -185,6 +186,15 @@ async function get_list_best_moves(fen){
   } catch (error) {
     console.error('Error fetching best move:', error);
     return null;
+  }
+}
+
+async function saveFen(fen) {
+  try {
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/set_fen', { "fen": fen });
+    console.log("FEN guardado en el backend:", response.data);
+  } catch (error) {
+    console.error("Error al guardar el FEN en el backend:", error);
   }
 }
 
