@@ -39,6 +39,8 @@ function handleCheckmate(isMated) {
 async function handleMove(move) {
   console.log(move);
   currentFen.value = move.after;
+  
+  boardAPI.value?.move("e7e5");
 
   const isWhiteMove = move.color === 'w';
   let bestMove;
