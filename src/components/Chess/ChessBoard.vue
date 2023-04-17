@@ -41,30 +41,29 @@ async function handleMove(move) {
   currentFen.value = move.after;
 
   const isWhiteMove = move.color === 'w';
+  let bestMove;
 
   if (isWhiteMove) {
     moves.value.push({ white: move.san, black: '' });
-    const bestMove = await getBestMove(currentFen.value, localStorage.getItem("access_token"));
-    if (bestMove) {
-      boardAPI.value?.move(bestMove);
-    }
+    bestMove = await getBestMove(currentFen.value, localStorage.getItem("access_token"));
   } else {
     const lastMoveIndex = moves.value.length - 1;
 
     if (lastMoveIndex >= 0 && moves.value[lastMoveIndex].white !== '') {
       moves.value[lastMoveIndex].black = move.san;
     } else {
-      // Si no hay movimientos en el historial o el último movimiento no tiene la propiedad 'white' establecida,
-      // crea un nuevo objeto con la propiedad 'white' vacía
       moves.value.push({ white: '', black: move.san });
     }
+    bestMove = await getBestMove(currentFen.value, localStorage.getItem("access_token"));
   }
-  
+
+  if (bestMove) {
+    boardAPI.value?.move(bestMove);
+  }
+
   saveFen(boardAPI.value?.getFen());
-  //get_list_best_moves(boardAPI.value?.getFen())
   boardAPI.value?.setShapes(shapes);
   updateOpeningName();
-
 }
 
 function undoLastMove() {
