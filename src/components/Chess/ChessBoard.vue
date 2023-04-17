@@ -43,9 +43,10 @@ async function handleMove(move) {
   const isWhiteMove = move.color === 'w';
   let bestMove;
 
-  if (isWhiteMove) {
+  if (move.color === 'w') {
     moves.value.push({ white: move.san, black: '' });
     bestMove = await getBestMove(currentFen.value, localStorage.getItem("access_token"));
+    boardAPI.value?.move(bestMove);
   } else {
     const lastMoveIndex = moves.value.length - 1;
 
@@ -54,7 +55,6 @@ async function handleMove(move) {
     } else {
       moves.value.push({ white: '', black: move.san });
     }
-    bestMove = await getBestMove(currentFen.value, localStorage.getItem("access_token"));
   }
 
   if (bestMove) {
