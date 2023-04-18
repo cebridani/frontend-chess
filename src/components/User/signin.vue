@@ -138,7 +138,7 @@ export default {
     };
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/api/auth/signup", requestData);
+      const response = await axios.post("http://192.168.49.2:30353/api/auth/signup", requestData);
 
       // Si la respuesta es exitosa, redirige al usuario a la página de inicio de sesión
       if (response.status === 201) {
@@ -173,7 +173,7 @@ export default {
       };
 
       try {
-        const response = await axios.post("http://127.0.0.1:5000/api/auth/signin", requestData);
+        const response = await axios.post("http://192.168.49.2:30353/api/auth/signin", requestData);
 
         if (response.status === 200) {
           localStorage.setItem("access_token", response.data.accessToken);
