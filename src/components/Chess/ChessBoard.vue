@@ -37,39 +37,34 @@ function handleCheckmate(isMated) {
 }
 
 async function handleMove(move) {
+  updateOpeningName();
   console.log(move);
   currentFen.value = move.after;
-  
-  boardAPI.move('e7e5');
-
   const isWhiteMove = move.color === 'w';
-  let bestMove;
-
-  if (move.color === 'w') {
+  if (isWhiteMove) {
     moves.value.push({ white: move.san, black: '' });
-    bestMove = await getBestMove(currentFen.value, localStorage.getItem("access_token"));
-    boardAPI.value?.move(bestMove);
+    const bestMove = await getBestMove(currentFen.value, localStorage.getItem("access_token"));
+    if (bestMove) {
+      boardAPI.value?.move(bestMove);
+    }
   } else {
     const lastMoveIndex = moves.value.length - 1;
-
     if (lastMoveIndex >= 0 && moves.value[lastMoveIndex].white !== '') {
       moves.value[lastMoveIndex].black = move.san;
     } else {
+      // Si no hay movimientos en el historial o el último movimiento no tiene la propiedad 'white' establecida,
+      // crea un nuevo objeto con la propiedad 'white' vacía
       moves.value.push({ white: '', black: move.san });
     }
   }
 
-  if (bestMove) {
-    boardAPI.value?.move(bestMove);
-  }
-
-  saveFen(boardAPI.value?.getFen());
-  boardAPI.value?.setShapes(shapes);
+  saveFen(currentFen.value);
   updateOpeningName();
 }
 
 function undoLastMove() {
   boardAPI.value?.undoLastMove();
+  updateOpeningName();
 
   const lastMoveIndex = moves.value.length - 1;
   if (lastMoveIndex >= 0) {
@@ -81,26 +76,26 @@ function undoLastMove() {
     } else {
       // Si el último movimiento fue de las negras, borra la propiedad 'black' del último objeto en el historial
       moves.value[lastMoveIndex].black = '';
+      handleMove(boardAPI.value?.getLastMove())
+      moves.value.pop();
     }
   }
 
 }
 
 async function updateOpeningName() {
-  if(!(openingName.value == "undefined")){
-    const newOpeningName = await boardAPI.value?.getOpeningName();
+  const newOpeningName = await boardAPI.value?.getOpeningName();
     if (newOpeningName) {
       openingName.value = newOpeningName;
     }else{
       openingName.value = ""
     }
-  }
 }
 
 async function clearMoves(){
   boardAPI.value?.resetBoard();
   try{
-    const response = await axios.post('http://192.168.49.2:30353/api/chess/set_fen', { "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" }, {
+    const response = await axios.post('http://127.0.0.1:5000/api/chess/set_fen', { "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -129,14 +124,14 @@ function setCustomFen(){
 
 async function getBestMove(fen, jwtToken) {
   try{
-    const response = await axios.post('http://192.168.49.2:30353/api/chess/get_best_move', { fen }, {
+    const response = await axios.post('http://127.0.0.1:5000/api/chess/get_best_move', { fen }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwtToken}`
         }
       });
-    console.log(response.data.best_move);
-    return response.data.best_move;
+    console.log(response);
+    return response.data;
   } catch (error) {
     console.error('Error fetching best move:', error);
     return null;
@@ -146,23 +141,25 @@ async function getBestMove(fen, jwtToken) {
 async function fetchFen() {
   try {
     const token = localStorage.getItem('access_token');
-    const response = await axios.get('http://192.168.49.2:30353/api/chess/get_fen', {
+    const response = await axios.get('http://127.0.0.1:5000/api/chess/get_fen', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     });
     try{
     if(boardAPI.value?.setPosition(response.data.fen)){
+      updateOpeningName();
     isInvalidFen.value = true;
     if(boardAPI.value?.getTurnColor() == 'black'){
       const bestMove = await getBestMove(currentFen.value, localStorage.getItem("access_token"));
       if (bestMove) {
         boardAPI.value?.move(bestMove);
       }
+      updateOpeningName();
     }
   }else{
     isInvalidFen.value = false;
-    openingName.value = "undefined"
+    updateOpeningName();
   }
   }catch(error){
     isInvalidFen.value = true;
@@ -174,7 +171,7 @@ async function fetchFen() {
 
 async function get_list_best_moves(fen){
   try{
-    const response = await axios.post('http://192.168.49.2:30353/api/chess/top_moves', { fen }, {
+    const response = await axios.post('http://127.0.0.1:5000/api/chess/top_moves', { fen }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -192,7 +189,7 @@ async function get_list_best_moves(fen){
 
 async function saveFen(fen) {
   try {
-    const response = await axios.post('http://192.168.49.2:30353/api/chess/set_fen', { "fen": fen });
+    const response = await axios.post('http://127.0.0.1:5000/api/chess/set_fen', { "fen": fen });
     console.log("FEN guardado en el backend:", response.data);
   } catch (error) {
     console.error("Error al guardar el FEN en el backend:", error);
