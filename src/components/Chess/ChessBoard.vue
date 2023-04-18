@@ -95,7 +95,7 @@ async function updateOpeningName() {
 async function clearMoves(){
   boardAPI.value?.resetBoard();
   try{
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/set_fen', { "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" }, {
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/set_fen', { "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -124,7 +124,7 @@ function setCustomFen(){
 
 async function getBestMove(fen, jwtToken) {
   try{
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/get_best_move', { fen }, {
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/get_best_move', { fen }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwtToken}`
@@ -141,7 +141,7 @@ async function getBestMove(fen, jwtToken) {
 async function fetchFen() {
   try {
     const token = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:5000/api/chess/get_fen', {
+    const response = await axios.get('http://192.168.49.2:30353/api/chess/get_fen', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -171,7 +171,7 @@ async function fetchFen() {
 
 async function get_list_best_moves(fen){
   try{
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/top_moves', { fen }, {
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/top_moves', { fen }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -189,7 +189,7 @@ async function get_list_best_moves(fen){
 
 async function saveFen(fen) {
   try {
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/set_fen', { "fen": fen });
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/set_fen', { "fen": fen });
     console.log("FEN guardado en el backend:", response.data);
   } catch (error) {
     console.error("Error al guardar el FEN en el backend:", error);
