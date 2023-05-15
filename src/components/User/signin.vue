@@ -149,7 +149,11 @@ export default {
     };
 
     try {
-      const response = await axios.post("http://192.168.49.2:30353/api/auth/signup", requestData);
+      const response = await axios.post("http://192.168.49.2:30353/api/auth/signup", requestData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
       // Si la respuesta es exitosa, redirige al usuario a la página de inicio de sesión
       if (response.data === 201) {
@@ -188,7 +192,11 @@ export default {
       };
 
       try {
-        const response = await axios.post("http://http://192.168.49.2:30353/api/auth/signin", requestData);
+        const response = await axios.post("http://http://192.168.49.2:30353/api/auth/signin", requestData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
         if (response.status === 200) {
           localStorage.setItem("access_token", response.data.accessToken);
