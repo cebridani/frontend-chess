@@ -10,10 +10,12 @@
 <script>
 import appHeader from './components/Header';
 import Chessboard from './components/Chess/ChessBoard.vue';
+import Stadistics from './components/Chess/Stadistics.vue';
 
 export default {
   components:{
     Chessboard,
+    Stadistics,
     appHeader
   }
 }

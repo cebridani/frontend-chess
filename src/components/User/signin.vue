@@ -1,6 +1,9 @@
 <template>
     <div class="signin_container p_top">
-
+        <div class="error" style="color: red;">
+          {{ errorSignIn }}
+          {{ errorSignUp }}
+        </div>
         <Form @submit="onSubmit" :validation-schema="formSchema">
 
             <h1 v-text="!type ? 'Sign in':'Sign up'"></h1>
@@ -89,7 +92,7 @@
             </button>
 
             <hr/>
-            <div class="form_swap" @click="type = !type">
+            <div class="form_swap" @click="resetErrors(); type = !type">
                 <span v-if="type">
                     I want to <b>Sign in</b>
                 </span>
@@ -118,9 +121,17 @@ export default {
     Form,
   },
 
+  methods: {
+    resetErrors() {
+      this.errorSignIn = "";
+      this.errorSignUp = "";
+    }
+  },
+
   setup() {
     const router = useRouter();
-
+    const errorSignIn = ref('');
+    const errorSignUp = ref('');
     const type = ref(false);
 
     const onSubmit = async (values, { resetForm }) => {
@@ -138,14 +149,18 @@ export default {
     };
 
     try {
-      const response = await axios.post("http://192.168.49.2:30353/api/auth/signup", requestData);
+      const response = await axios.post("http://127.0.0.1:5000/api/auth/signup", requestData);
 
       // Si la respuesta es exitosa, redirige al usuario a la página de inicio de sesión
-      if (response.status === 201) {
+      if (response.data === 201) {
         router.push({ name: "home" });
+      }else{
+        errorSignUp.value = "Error on Sign Up (user already exists)";
+        console.log("Error");
       }
     } catch (error) {
       console.log("Error al registrar usuario:", error);
+      
     }
 
   }
@@ -173,7 +188,7 @@ export default {
       };
 
       try {
-        const response = await axios.post("http://192.168.49.2:30353/api/auth/signin", requestData);
+        const response = await axios.post("http://127.0.0.1:5000/api/auth/signin", requestData);
 
         if (response.status === 200) {
           localStorage.setItem("access_token", response.data.accessToken);
@@ -181,9 +196,11 @@ export default {
           router.push({ name: "home" });
         } else {
           console.log("No se pudo iniciar sesión, respuesta no es 200");
+          errorSignIn.value = "Email or password incorrect";
         }
       } catch (error) {
         console.log("Error al iniciar sesión:", error);
+        errorSignIn.value = "Email or password incorrect";
       }
     };
 
@@ -191,6 +208,8 @@ export default {
       type,
       onSubmit,
       formSchema,
+      errorSignIn,
+      errorSignUp,
     };
   },
 };

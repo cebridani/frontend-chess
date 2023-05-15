@@ -14,13 +14,13 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/signin" @click.prevent="logout">
-                        Logout
+                        <router-link to="/stadistics">
+                        Stadistics
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/user/dashboard">
-                            Dashboard
+                        <router-link to="/signin" @click.prevent="logout">
+                        Logout
                         </router-link>
                     </li>
                 </ul>
@@ -35,8 +35,12 @@ export default {
   setup() {
 
     const logout = () => {
-      // Elimina el token del almacenamiento local
+      // Elimina almacenamiento local
       localStorage.removeItem("access_token");
+      localStorage.removeItem("evaluation");
+      localStorage.removeItem("fen");
+      localStorage.removeItem("opening");
+      localStorage.removeItem("pgn");
     };
 
     return { logout };
