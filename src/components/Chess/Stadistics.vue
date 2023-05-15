@@ -85,7 +85,7 @@
     async function getPosition(){
       let fen = localStorage.getItem('fen');
       try {
-        const response = await axios.post('http://127.0.0.1:5000/api/chess/get_stadistics', fen, {
+        const response = await axios.post('http://192.168.49.2:30353/api/chess/get_stadistics', fen, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
