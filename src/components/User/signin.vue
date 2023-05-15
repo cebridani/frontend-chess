@@ -151,7 +151,8 @@ export default {
     try {
       const response = await axios.post("http://192.168.49.2:30353/api/auth/signup", requestData, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*"
       }
     });
 
@@ -194,7 +195,8 @@ export default {
       try {
         const response = await axios.post("http://http://192.168.49.2:30353/api/auth/signin", requestData, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*"
       }
     });
 
