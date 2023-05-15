@@ -65,7 +65,7 @@ async function updateOpeningName() {
 async function getEvaluation() {
   var fen = lastMove.after;
   try {
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/get_evaluation', fen, {
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/get_evaluation', fen, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -86,7 +86,7 @@ async function clearMoves() {
   boardAPI.value?.resetBoard();
   var after = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   try {
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/set_fen', {after}, {
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/set_fen', {after}, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -117,7 +117,7 @@ function setCustomFen() {
 }
 async function getBestMove(jwtToken) {
   try {
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/get_best_move', lastMove, {
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/get_best_move', lastMove, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwtToken}`
@@ -134,7 +134,7 @@ async function fetchPgn() {
 
   try {
     const token = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:5000/api/chess/get_pgn', {
+    const response = await axios.get('http://192.168.49.2:30353/api/chess/get_pgn', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -158,7 +158,7 @@ async function get_list_best_moves() {
   try {
     const fen = boardAPI.value?.getFen();
     const token = localStorage.getItem('access_token');
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/top_moves', fen, {
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/top_moves', fen, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -184,7 +184,7 @@ async function get_list_best_moves() {
 }
 async function saveFen() {
   try {
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/set_fen', lastMove);
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/set_fen', lastMove);
     console.log("FEN guardado en el backend:", response.data);
   } catch (error) {
     console.error("Error al guardar el FEN en el backend:", error);
@@ -193,7 +193,7 @@ async function saveFen() {
 
 async function savePgn() {
   try {
-    const response = await axios.post('http://127.0.0.1:5000/api/chess/set_pgn', boardAPI.value?.getPgn());
+    const response = await axios.post('http://192.168.49.2:30353/api/chess/set_pgn', boardAPI.value?.getPgn());
     console.log("PGN guardado en el backend:", response.data);
     localStorage.setItem('pgn', boardAPI.value?.getPgn());
     saveFen();
