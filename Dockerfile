@@ -22,8 +22,5 @@ FROM nginx:stable-alpine as production-stage
 # Copiar la carpeta dist generada en el paso anterior
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Exponer el puerto 4000
-EXPOSE 4000
-
 # Iniciar el servidor Nginx
 CMD ["nginx", "-g", "daemon off;"]
