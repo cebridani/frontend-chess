@@ -17,21 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend-chess
-          image: cebridani/frontend-chess:latest
+          image: gcr.io/polar-valor-386820/frontend-chess:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-chess
-  namespace: chess
-spec:
-  selector:
-    app: frontend-chess
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: NodePort
+            - containerPort: 8080
