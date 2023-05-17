@@ -1,4 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/polar-valor-386820/frontend-chess:v1', '.']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'deployment.yaml']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'service.yaml']
 images: ['gcr.io/polar-valor-386820/frontend-chess:v1']
