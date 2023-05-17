@@ -1,23 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-chess
-  namespace: chess
+  name: frontend-chess-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: frontend-chess
   template:
     metadata:
-      name: frontend-chess
-      namespace: chess
       labels:
         app: frontend-chess
     spec:
       containers:
         - name: frontend-chess
-          image: gcr.io/polar-valor-386820/frontend-chess:latest
-          imagePullPolicy: Always
+          image: gcr.io/polar-valor-386820/frontend-chess:v1
           ports:
             - containerPort: 8080
