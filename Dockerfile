@@ -1,26 +1,23 @@
-# Imagen base oficial de Node.js
-FROM node:lts-alpine as build-stage
+# Imagen base
+FROM node:lts-alpine
 
 # Directorio de trabajo
 WORKDIR /app
 
-# Copiar package.json y package-lock.json
+# Copia package.json y package-lock.json
 COPY package*.json ./
 
-# Instalar las dependencias
+# Instala dependencias
 RUN npm install
 
-# Copiar el resto de los archivos del proyecto
+# Copia el código de la aplicación
 COPY . .
 
-# Construir la aplicación
+# Construye la aplicación para producción
 RUN npm run build
 
-# Imagen base para el servidor Nginx
-FROM nginx:stable-alpine as production-stage
+# Exponer el puerto 8080
+EXPOSE 8080
 
-# Copiar la carpeta dist generada en el paso anterior
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-# Iniciar el servidor Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Inicia la aplicación
+CMD [ "npm", "start" ]
