@@ -162,8 +162,8 @@ export default {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         // El servicio devolvió un error 400, lo que significa que el usuario ya existe
-        errorSignUp.value = "Error on Sign Up (user already exists)";
         errorSignUpColor.value = "red";
+        errorSignUp.value = "Error on Sign Up (user already exists)";
       } else {
         // Otro error ocurrió, puedes manejarlo aquí
         console.log("Error al registrar usuario:", error);
@@ -202,6 +202,7 @@ export default {
           router.push({ name: "home" });
         } else {
           console.log("No se pudo iniciar sesión, respuesta no es 200");
+          errorSignUpColor.value = "red";
           errorSignIn.value = "Email or password incorrect";
         }
       } catch (error) {
