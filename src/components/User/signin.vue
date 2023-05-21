@@ -149,12 +149,7 @@ export default {
     };
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/api/auth/signup", requestData, {
-      headers: {
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*"
-      }
-    });
+      const response = await axios.post("http://34.175.53.49:80/api/auth/signup", requestData);
 
       // Si la respuesta es exitosa, redirige al usuario a la página de inicio de sesión
       if (response.data === 201) {
@@ -193,7 +188,7 @@ export default {
       };
 
       try {
-        const response = await axios.post("http://127.0.0.1:5000/api/auth/signin", requestData);
+        const response = await axios.post("http://34.175.53.49:80/api/auth/signin", requestData);
 
         if (response.status === 200) {
           localStorage.setItem("access_token", response.data.accessToken);
