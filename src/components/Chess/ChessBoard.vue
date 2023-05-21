@@ -48,6 +48,7 @@ function undoLastMove() {
   localStorage.setItem('pgn', boardAPI.value?.getPgn())
   savePgn();
   saveFen();
+  localStorage.setItem("fen", boardAPI.value?.getFen());
   updateOpeningName();
   lastMove.after = boardAPI.value?.getFen();
   parsePgn(boardAPI.value?.getPgn());
@@ -98,6 +99,7 @@ async function clearMoves() {
     moves.value = [];
     currentFen.value = boardAPI.value?.getFen();
     lastMove.after = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    localStorage.setItem("fen", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     evaluation.value = "0";
   } catch (error) {
     console.error('Error fetching best move:', error);
