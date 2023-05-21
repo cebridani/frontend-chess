@@ -217,6 +217,7 @@ export default {
       formSchema,
       errorSignIn,
       errorSignUp,
+      errorSignUpColor,
     };
   },
 };
