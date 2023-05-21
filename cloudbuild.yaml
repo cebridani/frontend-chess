@@ -7,5 +7,5 @@ steps:
   args: ['container', 'clusters', 'get-credentials', 'chess-cluster', '--zone', 'europe-southwest1-a', '--project', 'polar-valor-386820']
 - name: 'gcr.io/cloud-builders/kubectl'
   env: ['CLOUDSDK_COMPUTE_ZONE=europe-southwest1-a', 'CLOUDSDK_CONTAINER_CLUSTER=chess-cluster']
-  args: ['rollout', 'restart', 'deployment/frontend-chess']
+  args: ['rollout', 'restart', 'deployment/frontend-chess', '-n', 'chess']
 images: ['gcr.io/polar-valor-386820/frontend-chess:latest']
