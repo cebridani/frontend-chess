@@ -1,6 +1,6 @@
 <template>
     <div class="signin_container p_top">
-        <div class="error" style="color: red;">
+        <div class="error" :style="{ color: errorSignUpColor }">
           {{ errorSignIn }}
           {{ errorSignUp }}
         </div>
@@ -133,7 +133,7 @@ export default {
     const errorSignIn = ref('');
     const errorSignUp = ref('');
     const type = ref(false);
-
+    const errorSignUpColor = ref('red');
     const onSubmit = async (values, { resetForm }) => {
   if (!type.value) {
     // sign in
@@ -150,17 +150,20 @@ export default {
 
     try {
       const response = await axios.post("http://34.175.53.49:80/api/auth/signup", requestData);
-      
+
       console.log(response);
 
       // Si la respuesta es exitosa, redirige al usuario a la página de inicio de sesión
       if (response.status === 201) {
         router.push({ name: "home" });
+        errorSignUp.value = "Sign Up successful";
+        errorSignUpColor.value = "green";
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
         // El servicio devolvió un error 400, lo que significa que el usuario ya existe
         errorSignUp.value = "Error on Sign Up (user already exists)";
+        errorSignUpColor.value = "red";
       } else {
         // Otro error ocurrió, puedes manejarlo aquí
         console.log("Error al registrar usuario:", error);
