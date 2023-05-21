@@ -150,6 +150,8 @@ export default {
 
     try {
       const response = await axios.post("http://34.175.53.49:80/api/auth/signup", requestData);
+      
+      console.log(response);
 
       // Si la respuesta es exitosa, redirige al usuario a la página de inicio de sesión
       if (response.status === 201) {
