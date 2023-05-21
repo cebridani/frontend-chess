@@ -1,8 +1,11 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/polar-valor-386820/frontend-chess:v1', '.']
+  args: ['build', '-t', 'gcr.io/polar-valor-386820/frontend-chess:latest', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/polar-valor-386820/frontend-chess:latest']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['container', 'clusters', 'get-credentials', 'chess-cluster', '--zone', 'europe-southwest1-a', '--project', 'polar-valor-386820']
 - name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'deployment.yaml']
-- name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'service.yaml']
-images: ['gcr.io/polar-valor-386820/frontend-chess:v1']
+  env: ['CLOUDSDK_COMPUTE_ZONE=europe-southwest1-a', 'CLOUDSDK_CONTAINER_CLUSTER=chess-cluster']
+  args: ['rollout', 'restart', 'deployment/frontend-chess']
+images: ['gcr.io/polar-valor-386820/frontend-chess:latest']
