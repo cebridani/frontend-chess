@@ -255,15 +255,15 @@ onMounted(() => {
           </table>
         </div>
         <div class="move-controls d-flex my-3 w-100 mt-auto">
-          <button @click="boardAPI?.toggleOrientation()" class="btn btn-secondary flex-fill me-2"
+          <button @click="get_list_best_moves" class="btn btn-secondary flex-fill me-2"
             style="color: #EDE6DB; background-color: #1A3C40;">
-            Toggle orientation
+            Best Moves
           </button>
-          <button @click="clearMoves" class="btn btn-secondary flex-fill me-2"
+          <button @click="handleMoveButtonClick" class="btn btn-secondary flex-fill me-2"
             style="color: #EDE6DB; background-color: #1A3C40;">
-            Reset
+            Move
           </button>
-          <button @click="undoLastMove" class="btn btn-secondary flex-fill me-2"
+           <button @click="undoLastMove" class="btn btn-secondary flex-fill me-2"
             style="color: #EDE6DB; background-color: #1A3C40;">
             Undo
           </button>
@@ -271,13 +271,13 @@ onMounted(() => {
             style="color: #EDE6DB; background-color: #1A3C40;">
             Threats
           </button>
-          <button @click="handleMoveButtonClick" class="btn btn-secondary flex-fill me-2"
+          <button @click="clearMoves" class="btn btn-secondary flex-fill me-2"
             style="color: #EDE6DB; background-color: #1A3C40;">
-            Move
+            Reset
           </button>
-          <button @click="get_list_best_moves" class="btn btn-secondary flex-fill me-2"
+          <button @click="boardAPI?.toggleOrientation()" class="btn btn-secondary flex-fill me-2"
             style="color: #EDE6DB; background-color: #1A3C40;">
-            Best Moves
+            Toggle orientation
           </button>
         </div>
         <div class="fen-input input-group my-3">
